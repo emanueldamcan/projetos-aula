@@ -1,0 +1,58 @@
+CREATE DATABASE bd_transportador_catarinense;
+
+USE bd_transportador_catarinense;
+
+CREATE TABLE clientes(
+    id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nome_cliente VARCHAR(100),
+    endereco_cliente VARCHAR(100),
+    cidade_cliente VARCHAR(100),
+    telefone_cliente CHAR(11)
+);
+CREATE TABLE motoristas(
+    id_motorista INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nome_motorista VARCHAR(100),
+    cnh_motorista VARCHAR(20),
+    telefone_motorista CHAR(11)
+);
+CREATE TABLE veiculo(
+    id_veiculo INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    placa_veiculo CHAR(7),
+    modelo_veiculo VARCHAR(50),
+    capacidade_kg_veiculo DECIMAL(10,2)
+);
+CREATE TABLE entregas(
+    id_entrega INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    detalhes_entrega VARCHAR(150),
+    peso_kg_entrega DECIMAL(10,2),
+    id_cliente INT,
+    id_motorista INT,
+    id_veiculo INT,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    FOREIGN KEY (id_motorista) REFERENCES motoristas(id_motorista),
+    FOREIGN KEY (id_veiculo) REFERENCES veiculo(id_veiculo)
+);
+INSERT INTO clientes VALUES
+(1, "Ana Maria", "Rua Floriano Peixoto Casa 22", "Joinville", 48912345678),
+(2, "Bryan Jackson", "Rua Leopoldina Apartamento 13", "Petropólis", 48988442211),
+(3, "Carlos Drummond", "Rua Vinicius de Moraes Casa 9", "Itaipé", 339135792468),
+(4, "Daniel Vorkaro", "Avenida Getúlio Vargas Casa 211", "Sideropólis", 48978945633),
+(5, "Eymael José", "RUA Getúlio Vargas Apartamento 2", "Criciúma", 48911112222);
+INSERT INTO motoristas VALUES
+(1, "Adriano Campopano", "Categoria B", 48933344422),
+(2, "Bruno Lazarus", "Categoria C", 48911123334),
+(3, "Enzo Gustavo", "Categoria B", 93966552233),
+(4, "Judas Padre", "Categoria D", 68911335161),
+(5, "Zumbi dos Palmares", "Categoria E", 82916551695);
+INSERT INTO veiculo VALUES
+(1, "A1BC23D", "Mercedes-Benz Actros", 62000),
+(2, "EF2D99J", "Volvo FH 540", 80000),
+(3, "H2J3GG1", "Scania R 450", 56000),
+(4, "EFD83JA", "Volvo FH 460", 70000),
+(5, "JH94K2A", "DAF XF FT (4x2)", 53000);
+INSERT INTO entregas VALUES
+(1, "Soja, milho, fertilizante", 5300, 1, 5, 2),
+(2, "Produtos químicos", 2400, 3, 4, 1),
+(3, "Eletrodomésticos", 3860, 4, 3, 3),
+(4, "Frutas, legumes", 1200, 2, 2, 4),
+(5, "Medicamentos", 2200, 5, 1, 5);

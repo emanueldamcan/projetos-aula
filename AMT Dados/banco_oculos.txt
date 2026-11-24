@@ -1,0 +1,66 @@
+CREATE DATABASE bd_oculos_loja;
+
+USE bd_oculos_loja;
+
+CREATE TABLE cliente(
+    id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nome_cliente VARCHAR(100),
+    endereco_cliente VARCHAR(100),
+    telefone_cliente CHAR(11)
+);
+CREATE TABLE armacao(
+    id_armacao INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    tipo_armacao VARCHAR(30),
+    cor_armacao VARCHAR(30)
+);
+CREATE TABLE receita_oculos(
+    id_receita_oculos INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_cliente INT,
+    data_emissao DATE,
+    data_validade DATE,
+    olho_direito_esferico DECIMAL(10,2),
+    olho_direito_cilindrico DECIMAL(10,2),
+    olho_direito_eixo DECIMAL(10,2),
+    olho_direito_adicao DECIMAL(10,2),
+    olho_direito_dnp DECIMAL(10,2),
+    olho_esquerda_esferico DECIMAL(10,2),
+    olho_esquerda_cilindrico DECIMAL(10,2),
+    olho_esquerda_eixo DECIMAL(10,2),
+    olho_esquerda_adicao DECIMAL(10,2),
+    olho_esquerda_dnp DECIMAL(10,2),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+);
+CREATE TABLE entrega(
+    id_entrega INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_cliente INT,
+    id_armacao INT,
+    id_receita_oculos INT,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_armacao) REFERENCES armacao(id_armacao),
+    FOREIGN KEY (id_receita_oculos) REFERENCES receita_oculos(id_receita_oculos)
+);
+
+INSERT INTO cliente VALUES
+(1, "Adrian Barbosa", "Rua Geslaine Barros Casa 17", 48912312344),
+(2, "Brian Mye", "Avenida Central Apartamento 22", 48933322299),
+(3, "Maggie May", "Rua Floriano Peixoto Casa 11", 48912457822),
+(4, "Narciso Jorge", "Rua Getúlio Vargas Casa 943", 48911123334),
+(5, "Logan Janones", "Rua Castelo Branco Casa 1", 48922334141);
+INSERT INTO armacao VALUES
+(1, "Redondo", "Preto"),
+(2, "Redondo", "Branco"),
+(3, "Quadrado", "Cinza"),
+(4, "Quadrado", "Preto"),
+(5, "Quadrado", "Vermelho");
+INSERT INTO receita_oculos VALUES
+(1, 1, "2026-11-10", "2026-11-20", -2.25, -0.75, 175, 1.50, 31.5, -2.50, -0.50, 10,  1.50, 32.0),
+(2, 2, "2026-11-11", "2026-11-22", -1.50, -0.50, 150, 1.00, 32.5, -1.70, -0.50, 10, 1.50, 31.0),
+(3, 3, "2026-11-13", "2026-11-25", -0.75, -0.50, 150, 1.00, 32.5, -1.50, 0.50, 10, 1.50, 31.0),
+(4, 4, "2026-11-14", "2026-11-28", -1.50, -0.75, 175, 1.50, 32.5, -1.50, 0.50, 10, 1.50, 31.0),
+(5, 5, "2026-11-16", "2026-11-29", -1.50, -0.25, 150, 1.50, 32.5, -1.50, 0.50, 10, 1.50, 31.0);
+INSERT INTO entrega VALUES
+(1, 2, 3, 2),
+(2, 1, 3, 1),
+(3, 3, 1, 3),
+(4, 5, 2, 5),
+(5, 4, 2, 4);
